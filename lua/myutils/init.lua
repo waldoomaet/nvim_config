@@ -1,0 +1,1 @@
+require("myutils.commands").setup()
