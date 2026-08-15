@@ -1,18 +1,12 @@
+local extras = require("myutils.extras")
+
 vim.g.mapleader = " "
 
-function Map(mode, lhs, rhs, opts)
-	local options = { remap = false, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.keymap.set(mode, lhs, rhs, options)
-end
-
-Map("n", "j", "gj")
-Map("n", "k", "gk")
-Map("n", "<leader>a", "ggVG")
-Map("n", "<leader>pv", vim.cmd.Ex)
-Map("n", "<leader>s", function()
+extras.Map("n", "j", "gj")
+extras.Map("n", "k", "gk")
+extras.Map("n", "<leader>a", "ggVG")
+extras.Map("n", "<leader>pv", vim.cmd.Ex)
+extras.Map("n", "<leader>s", function()
 	local filename = vim.fn.expand("%")
 	if filename == "" then
 		vim.cmd("saveas " .. vim.fn.input("Save as: "))
@@ -20,44 +14,44 @@ Map("n", "<leader>s", function()
 		vim.cmd("write")
 	end
 end)
-Map("n", "<leader>n", "<cmd>tabnew | set filetype=markdown<CR>", { desc = "New markdown buffer" })
-Map("t", "<Esc><Esc>", "<C-\\><C-n>")
-Map("n", "<leader>c", "gcc", { remap = true })
-Map("v", "<leader>c", "gc", { remap = true })
+extras.Map("n", "<leader>n", "<cmd>tabnew | set filetype=markdown<CR>", { desc = "New markdown buffer" })
+extras.Map("t", "<Esc><Esc>", "<C-\\><C-n>")
+extras.Map("n", "<leader>c", "gcc", { remap = true })
+extras.Map("v", "<leader>c", "gc", { remap = true })
 
 -- ===============================================
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 
-Map("n", "<C-h>", "<C-w>h")
-Map("n", "<C-j>", "<C-w>j")
-Map("n", "<C-k>", "<C-w>k")
-Map("n", "<C-l>", "<C-w>l")
+extras.Map("n", "<C-h>", "<C-w>h")
+extras.Map("n", "<C-j>", "<C-w>j")
+extras.Map("n", "<C-k>", "<C-w>k")
+extras.Map("n", "<C-l>", "<C-w>l")
 
-Map("t", "<C-h>", "<cmd>wincmd h<CR>")
-Map("t", "<C-j>", "<cmd>wincmd j<CR>")
-Map("t", "<C-k>", "<cmd>wincmd k<CR>")
-Map("t", "<C-l>", "<cmd>wincmd l<CR>")
+extras.Map("t", "<C-h>", "<cmd>wincmd h<CR>")
+extras.Map("t", "<C-j>", "<cmd>wincmd j<CR>")
+extras.Map("t", "<C-k>", "<cmd>wincmd k<CR>")
+extras.Map("t", "<C-l>", "<cmd>wincmd l<CR>")
 
-Map("n", "<C-Down>", ":resize -2<CR>")
-Map("n", "<C-Up>", ":resize +2<CR>")
-Map("n", "<C-Left>", ":vertical resize -2<CR>")
-Map("n", "<C-Right>", ":vertical resize +2<CR>")
+extras.Map("n", "<C-Down>", ":resize -2<CR>")
+extras.Map("n", "<C-Up>", ":resize +2<CR>")
+extras.Map("n", "<C-Left>", ":vertical resize +2<CR>")
+extras.Map("n", "<C-Right>", ":vertical resize -2<CR>")
 
-Map("t", "<C-Down>", "<cmd>resize -2<CR>")
-Map("t", "<C-Up>", "<cmd>resize +2<CR>")
-Map("t", "<C-Left>", "<cmd>vertical resize -2<CR>")
-Map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
+extras.Map("t", "<C-Down>", "<cmd>resize -2<CR>")
+extras.Map("t", "<C-Up>", "<cmd>resize +2<CR>")
+extras.Map("t", "<C-Left>", "<cmd>vertical resize -2<CR>")
+extras.Map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
 
 -- these may be a problem if I ever install https://github.com/mbbill/undotree
-Map("v", "J", ":m '>+1<CR>gv=gv")
-Map("v", "K", ":m '<-2<CR>gv=gv")
+extras.Map("v", "J", ":m '>+1<CR>gv=gv")
+extras.Map("v", "K", ":m '<-2<CR>gv=gv")
 
-Map("v", "<", "<gv")
-Map("v", ">", ">gv")
+extras.Map("v", "<", "<gv")
+extras.Map("v", ">", ">gv")
 
-Map("n", "<TAB>", "gt")
-Map("n", "<S-TAB>", "gT")
-Map("n", "<leader>cc", function()
+extras.Map("n", "<TAB>", "gt")
+extras.Map("n", "<S-TAB>", "gT")
+extras.Map("n", "<leader>cc", function()
 	local buf = vim.api.nvim_get_current_buf()
 
 	local is_empty = vim.api.nvim_buf_line_count(buf) == 1 and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ""
@@ -70,9 +64,9 @@ Map("n", "<leader>cc", function()
 end)
 -- ===============================================
 
-Map("n", "gl", vim.diagnostic.open_float)
+extras.Map("n", "gl", vim.diagnostic.open_float)
 
-Map("i", "`", function()
+extras.Map("i", "`", function()
 	if vim.fn.pumvisible() == 1 then
 		vim.g.completion_cancelled = true
 		return "<C-e>"
@@ -83,14 +77,14 @@ end, {
 	desc = "Close completion popup or leave insert mode",
 })
 
-Map("i", "<CR>", function()
+extras.Map("i", "<CR>", function()
 	if vim.fn.pumvisible() == 1 then
 		return "<C-y>"
 	end
 	return "<CR>"
 end, { expr = true, desc = "Choose the currently focused autocomplete ouption" })
 
-Map("i", "<Tab>", function()
+extras.Map("i", "<Tab>", function()
 	if vim.fn.pumvisible() == 1 then
 		return "<C-n>"
 	end
@@ -169,12 +163,12 @@ local function toggle_terminal()
 end
 
 -- Normal mode
-Map("n", "<C-`>", toggle_terminal, {
+extras.Map("n", "<C-`>", toggle_terminal, {
 	desc = "Toggle terminal",
 })
 
 -- Terminal mode
-Map("t", "<C-`>", function()
+extras.Map("t", "<C-`>", function()
 	vim.cmd("stopinsert") -- leave terminal mode
 	toggle_terminal()
 end, {
@@ -183,26 +177,26 @@ end, {
 
 -- ================================================
 
-Map("i", "<C-s>", function()
-	local word = vim.fn.expand("<cword>")
-
-	if word == "" then
-		return
-	end
-
-	local suggestions = vim.fn.spellsuggest(word, 10)
-
-	local items = {}
-	for _, suggestion in ipairs(suggestions) do
-		table.insert(items, {
-			word = suggestion,
-			menu = "[spell]",
-		})
-	end
-
-	if #items > 0 then
-		vim.fn.complete(vim.fn.col(".") - #word, items)
-	end
-end, {
-	desc = "Spell suggestions",
-})
+-- extras.Map("i", "<C-s>", function()
+-- 	local word = vim.fn.expand("<cword>")
+--
+-- 	if word == "" then
+-- 		return
+-- 	end
+--
+-- 	local suggestions = vim.fn.spellsuggest(word, 10)
+--
+-- 	local items = {}
+-- 	for _, suggestion in ipairs(suggestions) do
+-- 		table.insert(items, {
+-- 			word = suggestion,
+-- 			menu = "[spell]",
+-- 		})
+-- 	end
+--
+-- 	if #items > 0 then
+-- 		vim.fn.complete(vim.fn.col(".") - #word, items)
+-- 	end
+-- end, {
+-- 	desc = "Spell suggestions",
+-- })

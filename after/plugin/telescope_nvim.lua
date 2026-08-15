@@ -1,6 +1,7 @@
 local builtin = require('telescope.builtin')
 local telescope = require("telescope")
 local actions = require("telescope.actions")
+local extras = require("myutils.extras")
 
 telescope.setup({
     defaults = {
@@ -15,8 +16,8 @@ telescope.setup({
     },
 })
 
-vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<C-p>', builtin.git_files, {})
-vim.keymap.set('n', '<leader>ps', function()
+extras.Map('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
+extras.Map('n', '<C-p>', builtin.git_files, {})
+extras.Map('n', '<leader>ps', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end)
