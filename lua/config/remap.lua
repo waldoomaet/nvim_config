@@ -66,26 +66,34 @@ end)
 -- ===============================================
 
 extras.Map("n", "gl", vim.diagnostic.open_float)
+-- extras.Map("n", )
 
-extras.Map("i", "`", function()
-	if vim.fn.pumvisible() == 1 then
-		vim.g.completion_cancelled = true
-		return "<C-e>"
-	end
-	return "`"
-end, {
-	expr = true,
-	desc = "Close completion popup or leave insert mode",
-})
+-- extras.Map("i", "`", function()
+-- 	if vim.fn.pumvisible() == 1 then
+-- 		vim.g.completion_cancelled = true
+-- 		return "<C-e>"
+-- 	end
+-- 	return "`"
+-- end, {
+-- 	expr = true,
+-- 	desc = "Close completion popup or leave insert mode",
+-- })
 
-extras.Map("i", "<CR>", function()
-	if vim.fn.pumvisible() == 1 then
-		return "<C-y>"
-	end
-	return "<CR>"
-end, { expr = true, desc = "Choose the currently focused autocomplete ouption" })
+-- extras.Map("i", "<CR>", function()
+-- 	if vim.fn.pumvisible() == 1 then
+-- 		return "<C-y>"
+-- 	end
+-- 	return "<CR>"
+-- end, { expr = true, desc = "Choose the currently focused autocomplete ouption" })
 
 extras.Map("i", "<Tab>", function()
+	if vim.fn.pumvisible() == 1 then
+		return "<C-n>"
+	end
+	return "<Tab>"
+end, { expr = true, desc = "Cycle autocomplete options" })
+
+extras.Map("i", "<S-Tab>", function()
 	if vim.fn.pumvisible() == 1 then
 		return "<C-n>"
 	end

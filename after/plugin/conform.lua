@@ -1,7 +1,7 @@
 local conform = require("conform")
 local extras = require("myutils.extras")
 
-function Install_Formatters(config)
+function install_formatters(config)
 	local lazyConfig = require("lazy.core.config")
 
 	if lazyConfig.plugins["mason.nvim"] then
@@ -35,7 +35,7 @@ local config = {
 	java = { "ast-grep" },
 }
 
-Install_Formatters(config)
+install_formatters(config)
 
 conform.setup({
 	formatters_by_ft = config,

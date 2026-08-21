@@ -41,6 +41,7 @@ function Tab:set_current(term_k)
 	end
 	vim.api.nvim_win_set_buf(self.win_id, curr)
 	vim.api.nvim_set_current_buf(curr)
+	vim.cmd("startinsert")
 end
 
 function Tab:delete_terminal(term_k)
