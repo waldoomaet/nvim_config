@@ -1,4 +1,5 @@
 local extras = require("myutils.extras")
+local terminal = require("myutils.terminal")
 
 vim.g.mapleader = " "
 
@@ -93,87 +94,19 @@ end, { expr = true, desc = "Cycle autocomplete options" })
 
 -- ==================================================
 
-local term_win = nil
-local term_buf = nil
-local prev_win = nil
+extras.Map("n", "<leader>tc", terminal.create_terminal)
+extras.Map("n", "<leader>tt", terminal.toggle_terminal)
+extras.Map("n", "<leader>tn", terminal.next_terminal)
+extras.Map("t", "<Tab>", terminal.next_terminal)
+extras.Map("n", "<leader>tp", terminal.previous_terminal)
+extras.Map("n", "<leader>td", terminal.delete_current_terminal)
 
-local function get_terminal_dir()
-	-- local buf = vim.api.nvim_get_current_buf()
-	-- local ft = vim.bo[buf].filetype
-	-- local path = ''
-	--
-	-- -- Netrw: use the directory being browsed
-	-- if ft == "netrw" then
-	--     path = vim.fn.expand("%:p")
-	-- end
-	--
-	-- -- Regular file: use parent directory
-	-- local file = vim.api.nvim_buf_get_name(buf)
-	-- if file ~= "" then
-	--     path = vim.fn.fnamemodify(file, ":p:h")
-	-- end
-	--
-	-- if path ~= "" then
-	--     return path
-	-- end
-
-	-- Fallback to current working directory
-	return vim.fn.getcwd()
-end
-
-local function toggle_terminal()
-	-- Close terminal if it exists
-	if term_win and vim.api.nvim_win_is_valid(term_win) then
-		vim.api.nvim_win_close(term_win, true)
-
-		if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-			vim.api.nvim_buf_delete(term_buf, { force = true })
-		end
-
-		term_win = nil
-		term_buf = nil
-
-		if prev_win and vim.api.nvim_win_is_valid(prev_win) then
-			vim.api.nvim_set_current_win(prev_win)
-		end
-
-		return
+extras.Map({ "n", "v" }, "<Esc>", function()
+	if vim.v.hlsearch == 1 then
+		vim.cmd("nohlsearch")
 	end
-
-	-- Save current window
-	prev_win = vim.api.nvim_get_current_win()
-
-	local term_dir = get_terminal_dir()
-
-	-- Create terminal split
-	vim.cmd("botright split")
-	vim.cmd("resize 12")
-
-	-- Set the terminal window's local cwd
-	vim.cmd("lcd " .. vim.fn.fnameescape(term_dir))
-
-	vim.cmd("terminal")
-
-	-- Store terminal references
-	term_win = vim.api.nvim_get_current_win()
-	term_buf = vim.api.nvim_get_current_buf()
-
-	-- Enter terminal mode
-	vim.cmd("startinsert")
-end
-
--- Normal mode
-extras.Map("n", "<C-`>", toggle_terminal, {
-	desc = "Toggle terminal",
-})
-
--- Terminal mode
-extras.Map("t", "<C-`>", function()
-	vim.cmd("stopinsert") -- leave terminal mode
-	toggle_terminal()
-end, {
-	desc = "Toggle terminal",
-})
+	return "<Esc>"
+end, { expr = true })
 
 -- ================================================
 

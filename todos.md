@@ -3,3 +3,4 @@
 * <C-`> just kills the current terminal. Maybe persistance of the terminal after toggle?
 * something like f5 that detects the filetype (or the project) and runs code (assuming some default ofc). Would be nice if it can be overwritten by a local .nvim.lua
 * spell correction with a select window showing available options and without entering insert mode
+* make lazy update automatically when needed after startup

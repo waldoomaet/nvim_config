@@ -1,5 +1,16 @@
 local M = {}
 
+function M.table_empty(tab)
+    return next(tab) == nil
+end
+function M.print_table(tab)
+	print("{")
+    for k, v in pairs(tab) do
+        print("    " .. k .. " -> " .. (type(v) ~= "table" and v or "table"))
+    end
+    print("}")
+end
+
 function M.Map(mode, lhs, rhs, opts)
 	local options = { remap = false, silent = true }
 	if opts then
@@ -31,14 +42,21 @@ local function on_exit(obj)
 	local stderr = obj.stderr
 
 	if code == 0 then
-		fast_event_notify("Process exited with 0", vim.log.levels.INFO)
+		local last_line = M.split(stdout, "\n")
+		last_line = last_line[#last_line]
+		fast_event_notify("Process exited with 0 (" .. last_line .. ")", vim.log.levels.INFO)
 		-- if stdout == "" then
 		-- 	fast_event_notify("Process exited with 0", vim.log.levels.INFO)
 		-- else
 		-- 	fast_event_notify(stdout, vim.log.levels.INFO)
 		-- end
 	else
-		fast_event_notify(string.format("Process exited with code %d", code), vim.log.levels.ERROR)
+		local last_line = M.split(stdout, "\n")
+		last_line = last_line[#last_line]
+		fast_event_notify(
+			string.format("Process exited with code %d (" .. last_line .. ")", code),
+			vim.log.levels.ERROR
+		)
 		-- if stderr == "" then
 		-- 	fast_event_notify(string.format("Process exited with code %d", code), vim.log.levels.ERROR)
 		-- else
