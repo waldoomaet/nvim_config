@@ -3,11 +3,11 @@ local terminal = require("myutils.terminal")
 
 vim.g.mapleader = " "
 
-extras.Map("n", "j", "gj")
-extras.Map("n", "k", "gk")
-extras.Map("n", "<leader>a", "ggVG")
-extras.Map("n", "<leader>pv", vim.cmd.Ex)
-extras.Map("n", "<leader>s", function()
+extras.map("n", "j", "gj")
+extras.map("n", "k", "gk")
+extras.map("n", "<leader>a", "ggVG")
+extras.map("n", "<leader>pv", vim.cmd.Ex)
+extras.map("n", "<leader>s", function()
 	local filename = vim.fn.expand("%")
 	if filename == "" then
 		vim.cmd("saveas " .. vim.fn.input("Save as: "))
@@ -15,44 +15,44 @@ extras.Map("n", "<leader>s", function()
 		vim.cmd("write")
 	end
 end)
-extras.Map("n", "<leader>n", "<cmd>tabnew | set filetype=markdown<CR>", { desc = "New markdown buffer" })
-extras.Map("t", "<Esc><Esc>", "<C-\\><C-n>")
-extras.Map("n", "<leader>c", "gcc", { remap = true })
-extras.Map("v", "<leader>c", "gc", { remap = true })
+extras.map("n", "<leader>n", "<cmd>tabnew | set filetype=markdown<CR>", { desc = "New markdown buffer" })
+extras.map("t", "<Esc><Esc>", "<C-\\><C-n>")
+extras.map("n", "<leader>c", "gcc", { remap = true })
+extras.map("v", "<leader>c", "gc", { remap = true })
 
 -- ===============================================
 -- https://medium.com/unixification/must-have-neovim-keymaps-51c283394070
 
-extras.Map("n", "<C-h>", "<C-w>h")
-extras.Map("n", "<C-j>", "<C-w>j")
-extras.Map("n", "<C-k>", "<C-w>k")
-extras.Map("n", "<C-l>", "<C-w>l")
+extras.map("n", "<C-h>", "<C-w>h")
+extras.map("n", "<C-j>", "<C-w>j")
+extras.map("n", "<C-k>", "<C-w>k")
+extras.map("n", "<C-l>", "<C-w>l")
 
-extras.Map("t", "<C-h>", "<cmd>wincmd h<CR>")
-extras.Map("t", "<C-j>", "<cmd>wincmd j<CR>")
-extras.Map("t", "<C-k>", "<cmd>wincmd k<CR>")
-extras.Map("t", "<C-l>", "<cmd>wincmd l<CR>")
+extras.map("t", "<C-h>", "<cmd>wincmd h<CR>")
+extras.map("t", "<C-j>", "<cmd>wincmd j<CR>")
+extras.map("t", "<C-k>", "<cmd>wincmd k<CR>")
+extras.map("t", "<C-l>", "<cmd>wincmd l<CR>")
 
-extras.Map("n", "<C-Down>", ":resize -2<CR>")
-extras.Map("n", "<C-Up>", ":resize +2<CR>")
-extras.Map("n", "<C-Left>", ":vertical resize +2<CR>")
-extras.Map("n", "<C-Right>", ":vertical resize -2<CR>")
+extras.map("n", "<C-Down>", ":resize -2<CR>")
+extras.map("n", "<C-Up>", ":resize +2<CR>")
+extras.map("n", "<C-Left>", ":vertical resize +2<CR>")
+extras.map("n", "<C-Right>", ":vertical resize -2<CR>")
 
-extras.Map("t", "<C-Down>", "<cmd>resize -2<CR>")
-extras.Map("t", "<C-Up>", "<cmd>resize +2<CR>")
-extras.Map("t", "<C-Left>", "<cmd>vertical resize -2<CR>")
-extras.Map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
+extras.map("t", "<C-Down>", "<cmd>resize -2<CR>")
+extras.map("t", "<C-Up>", "<cmd>resize +2<CR>")
+extras.map("t", "<C-Left>", "<cmd>vertical resize -2<CR>")
+extras.map("t", "<C-Right>", "<cmd>vertical resize +2<CR>")
 
 -- these may be a problem if I ever install https://github.com/mbbill/undotree
-extras.Map("v", "J", ":m '>+1<CR>gv=gv")
-extras.Map("v", "K", ":m '<-2<CR>gv=gv")
+extras.map("v", "J", ":m '>+1<CR>gv=gv")
+extras.map("v", "K", ":m '<-2<CR>gv=gv")
 
-extras.Map("v", "<", "<gv")
-extras.Map("v", ">", ">gv")
+extras.map("v", "<", "<gv")
+extras.map("v", ">", ">gv")
 
-extras.Map("n", "<TAB>", "gt")
-extras.Map("n", "<S-TAB>", "gT")
-extras.Map("n", "<leader>cc", function()
+extras.map("n", "<TAB>", "gt")
+extras.map("n", "<S-TAB>", "gT")
+extras.map("n", "<leader>cc", function()
 	local buf = vim.api.nvim_get_current_buf()
 
 	local is_empty = vim.api.nvim_buf_line_count(buf) == 1 and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ""
@@ -63,53 +63,17 @@ extras.Map("n", "<leader>cc", function()
 		vim.cmd("tabclose")
 	end
 end)
+
 -- ===============================================
 
-extras.Map("n", "gl", vim.diagnostic.open_float)
--- extras.Map("n", )
+extras.map("n", "<leader>tc", terminal.create_terminal)
+extras.map("n", "<leader>tt", terminal.toggle_terminal)
+extras.map("n", "<leader>tn", terminal.next_terminal)
+-- extras.map("t", "<Tab>", terminal.next_terminal)
+extras.map("n", "<leader>tp", terminal.previous_terminal)
+extras.map("n", "<leader>td", terminal.delete_current_terminal)
 
--- extras.Map("i", "`", function()
--- 	if vim.fn.pumvisible() == 1 then
--- 		vim.g.completion_cancelled = true
--- 		return "<C-e>"
--- 	end
--- 	return "`"
--- end, {
--- 	expr = true,
--- 	desc = "Close completion popup or leave insert mode",
--- })
-
--- extras.Map("i", "<CR>", function()
--- 	if vim.fn.pumvisible() == 1 then
--- 		return "<C-y>"
--- 	end
--- 	return "<CR>"
--- end, { expr = true, desc = "Choose the currently focused autocomplete ouption" })
-
-extras.Map("i", "<Tab>", function()
-	if vim.fn.pumvisible() == 1 then
-		return "<C-n>"
-	end
-	return "<Tab>"
-end, { expr = true, desc = "Cycle autocomplete options" })
-
-extras.Map("i", "<S-Tab>", function()
-	if vim.fn.pumvisible() == 1 then
-		return "<C-n>"
-	end
-	return "<Tab>"
-end, { expr = true, desc = "Cycle autocomplete options" })
-
--- ==================================================
-
-extras.Map("n", "<leader>tc", terminal.create_terminal)
-extras.Map("n", "<leader>tt", terminal.toggle_terminal)
-extras.Map("n", "<leader>tn", terminal.next_terminal)
-extras.Map("t", "<Tab>", terminal.next_terminal)
-extras.Map("n", "<leader>tp", terminal.previous_terminal)
-extras.Map("n", "<leader>td", terminal.delete_current_terminal)
-
-extras.Map({ "n", "v" }, "<Esc>", function()
+extras.map({ "n", "v" }, "<Esc>", function()
 	if vim.v.hlsearch == 1 then
 		vim.cmd("nohlsearch")
 	end
@@ -118,26 +82,16 @@ end, { expr = true })
 
 -- ================================================
 
--- extras.Map("i", "<C-s>", function()
--- 	local word = vim.fn.expand("<cword>")
---
--- 	if word == "" then
--- 		return
--- 	end
---
--- 	local suggestions = vim.fn.spellsuggest(word, 10)
---
--- 	local items = {}
--- 	for _, suggestion in ipairs(suggestions) do
--- 		table.insert(items, {
--- 			word = suggestion,
--- 			menu = "[spell]",
--- 		})
--- 	end
---
--- 	if #items > 0 then
--- 		vim.fn.complete(vim.fn.col(".") - #word, items)
--- 	end
--- end, {
--- 	desc = "Spell suggestions",
--- })
+extras.map("n", "ee", function()
+	local word = vim.fn.expand("<cword>")
+	if word == "" then
+		return
+	end
+	local suggestions = vim.fn.spellsuggest(word, 10)
+	extras.select_in_float(suggestions, function(choice)
+		if not choice then
+			return
+		end
+		vim.cmd("normal! ciw" .. choice)
+	end)
+end)

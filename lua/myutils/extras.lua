@@ -3,6 +3,7 @@ local M = {}
 function M.table_empty(tab)
     return next(tab) == nil
 end
+
 function M.print_table(tab)
 	print("{")
     for k, v in pairs(tab) do
@@ -11,7 +12,56 @@ function M.print_table(tab)
     print("}")
 end
 
-function M.Map(mode, lhs, rhs, opts)
+function M.select_in_float(items, callback)
+	local buf = vim.api.nvim_create_buf(false, true)
+
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, items)
+
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "cursor",
+		row = 1,
+		col = 0,
+		width = 30,
+		height = #items,
+		style = "minimal",
+		border = "rounded",
+	})
+
+	local index = 1
+
+	local function update()
+		vim.api.nvim_buf_clear_namespace(buf, -1, 0, -1)
+		vim.api.nvim_buf_add_highlight(buf, -1, "Visual", index - 1, 0, -1)
+	end
+
+	local function close()
+		if vim.api.nvim_win_is_valid(win) then
+			vim.api.nvim_win_close(win, true)
+		end
+	end
+
+	vim.keymap.set("n", "j", function()
+		index = math.min(index + 1, #items)
+		update()
+	end, { buffer = buf })
+
+	vim.keymap.set("n", "k", function()
+		index = math.max(index - 1, 1)
+		update()
+	end, { buffer = buf })
+
+	vim.keymap.set("n", "<CR>", function()
+		local selected = items[index]
+		close()
+		callback(selected)
+	end, { buffer = buf })
+
+	vim.keymap.set("n", "<Esc>", close, { buffer = buf })
+
+	update()
+end
+
+function M.map(mode, lhs, rhs, opts)
 	local options = { remap = false, silent = true }
 	if opts then
 		options = vim.tbl_extend("force", options, opts)

@@ -18,21 +18,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
 		end
 
-		extras.Map("n", "ge", vim.diagnostic.open_float)
-		extras.Map("n", "gd", vim.lsp.buf.definition) -- Go to definition
-		extras.Map("n", "gr", vim.lsp.buf.references) -- Find references
-		extras.Map("n", "gd", vim.lsp.buf.hover) -- Show documentation
-		extras.Map("n", "<leader>rn", vim.lsp.buf.rename) -- Rename symbol
-		extras.Map("n", "<leader>ca", vim.lsp.buf.code_action) -- Code actions
+		extras.map("n", "ge", vim.diagnostic.open_float)
+		extras.map("n", "gd", vim.lsp.buf.definition) -- Go to definition
+        extras.map("n", "gi", vim.lsp.buf.implementation)
+        extras.map("n", "gD", vim.lsp.buf.declaration)
+		extras.map("n", "gr", vim.lsp.buf.references) -- Find references
+		extras.map("n", "gd", vim.lsp.buf.hover) -- Show documentation
+		extras.map("n", "<leader>rn", vim.lsp.buf.rename) -- Rename symbol
+		extras.map("n", "<leader>ca", vim.lsp.buf.code_action) -- Code actions
 
-		extras.Map("i", "<Tab>", function()
+		extras.map("i", "<Tab>", function()
 			if vim.fn.pumvisible() == 1 then
 				return "<C-n>"
 			end
 			return "<Tab>"
 		end, { expr = true, desc = "Cycle autocomplete options" })
 
-		extras.Map("i", "<S-Tab>", function()
+		extras.map("i", "<S-Tab>", function()
 			if vim.fn.pumvisible() == 1 then
 				return "<C-p>"
 			end

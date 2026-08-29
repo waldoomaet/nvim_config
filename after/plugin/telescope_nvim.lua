@@ -16,8 +16,8 @@ telescope.setup({
     },
 })
 
-extras.Map('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
-extras.Map('n', '<C-p>', builtin.git_files, {})
-extras.Map('n', '<leader>ps', function()
+extras.map('n', '<leader>pf', builtin.find_files, { desc = 'Telescope find files' })
+extras.map('n', '<C-p>', builtin.git_files, {})
+extras.map('n', '<leader>ps', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end)
