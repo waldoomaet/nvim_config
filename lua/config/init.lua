@@ -58,3 +58,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.cmd("wincmd H")
 	end,
 })
+
+vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
+-- opts.rocks.hererocks = false

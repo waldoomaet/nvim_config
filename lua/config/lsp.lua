@@ -18,14 +18,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
 		end
 
-		extras.map("n", "ge", vim.diagnostic.open_float)
-		extras.map("n", "gd", vim.lsp.buf.definition) -- Go to definition
-        extras.map("n", "gi", vim.lsp.buf.implementation)
-        extras.map("n", "gD", vim.lsp.buf.declaration)
-		extras.map("n", "gr", vim.lsp.buf.references) -- Find references
-		extras.map("n", "gd", vim.lsp.buf.hover) -- Show documentation
-		extras.map("n", "<leader>rn", vim.lsp.buf.rename) -- Rename symbol
-		extras.map("n", "<leader>ca", vim.lsp.buf.code_action) -- Code actions
+		extras.map("n", "<leader>le", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+		extras.map("n", "<leader>ld", vim.lsp.buf.definition, { desc = "Go to definition" })
+		extras.map("n", "<leader>li", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+		extras.map("n", "<leader>lD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+		extras.map("n", "<leader>lr", vim.lsp.buf.references, { desc = "Find references" })
+		extras.map("n", "<leader>ly", vim.lsp.buf.hover, { desc = "Show documentation" })
+		extras.map("n", "<leader>ln", vim.lsp.buf.rename, { desc = "Rename symbol" })
+		-- extras.map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 
 		extras.map("i", "<Tab>", function()
 			if vim.fn.pumvisible() == 1 then

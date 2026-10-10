@@ -41,6 +41,6 @@ conform.setup({
 	formatters_by_ft = config,
 })
 
-extras.map("n", "<leader>f", function()
+extras.map("n", "<leader>lf", function()
 	conform.format({ lsp_format = "fallback", async = true })
-end)
+end, { desc = 'Format file (conform first, lsp fallback)'})

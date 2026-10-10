@@ -4,7 +4,7 @@ return {
 	cmd = { "Codex", "CodexToggle" }, -- Optional: Load only on command execution
 	keys = {
 		{
-			"<leader>xx", -- Change this to your preferred keybinding
+			"qq", -- Change this to your preferred keybinding
 			function()
 				require("codex").toggle()
 			end,

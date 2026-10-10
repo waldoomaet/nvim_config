@@ -313,6 +313,12 @@ function M.setup(config)
 		Tab:new()
 	end
 
+	extras.map("n", "<leader>tc", M.create_terminal, { desc = "Create terminal" })
+	extras.map("n", "<leader>tt", M.toggle_terminal, { desc = "Toggle terminal" })
+	extras.map("n", "<leader>tn", M.next_terminal, { desc = "Next terminal" })
+	extras.map("n", "<leader>tp", M.previous_terminal, { desc = "Previous terminal" })
+	extras.map("n", "<leader>td", M.delete_current_terminal, { desc = "Delete current terminal" })
+
 	vim.api.nvim_create_autocmd("TabNewEntered", {
 		callback = function()
 			if get_tab() == nil then
